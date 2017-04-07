@@ -9,85 +9,82 @@ module.exports = {
 
     "QUESTIONS_EN_US" : [
         {
-            "Reindeer have very thick coats, how many hairs per square inch do they have?": [
-                "13,000",
-                "1,200",
-                "5,000",
-                "700",
-                "1,000",
-                "120,000"
+            "Jump?": [
+                "jump",
+                "fall",
+                "fly",
+                "dive"
+
             ]
         },
         {
-            "The 1964 classic Rudolph The Red Nosed Reindeer was filmed in. ": [
-                "Japan",
-                "United States",
-                "Finland",
-                "Germany",
-                "Canada",
-                "Norway",
-                "France"
+            "Holy Diver? ": [
+                "holy diver",
+                "diver",
+                "jump",
+                "fall"
+
             ]
         },
         {
-            "Santas reindeer are cared for by one of the Christmas elves, what is his name?": [
-                "Wunorse Openslae",
-                "Alabaster Snowball",
-                "Bushy Evergreen",
-                "Pepper Minstix"
+            "Our House?": [
+                "our house",
+                "home",
+                "housing",
+                "houses"
             ]
         },
         {
-            "If all of Santas reindeer had antlers while pulling his Christmas sleigh, they would all be": [
-                "Girls",
-                "Boys",
-                "Girls and boys",
-                "No way to tell"
+            "Smooth Criminal?": [
+                "smooth criminal",
+                "crime",
+                "criminal",
+                "criminality"
             ]
         },
         {
-            "What do Reindeer eat?": [
-                "Lichen",
-                "Grasses",
-                "Leaves",
-                "Berries"
+            "How will I know?": [
+                "How will I know",
+                "you wont",
+                "not sure",
+                "what"
             ]
         },
         {
-            "What of the following is not true?": [
-                "Caribou live on all continents",
-                "Both reindeer and Caribou are the same species",
-                "Caribou are bigger than reindeer",
-                "Reindeer live in Scandinavia and Russia"
+            "Straight up?": [
+                "straight up",
+                "down",
+                "side ways",
+                "up"
             ]
         },
         {
-            "In what year did Rudolph make his television debut?": [
-                "1964",
-                "1979",
-                "2000",
-                "1956"
+            "Africa?": [
+                "africa",
+                "mexico",
+                "iowa",
+                "los angeles"
             ]
         },
         {
-            "Who was the voice of Rudolph in the 1964 classic?": [
-                "Billie Mae Richards",
-                "Burl Ives",
-                "Paul Soles",
+            "Down Under?": [
+                "down under",
+                "under down",
+                "above up",
                 "Lady Gaga"
             ]
         },
         {
-            "In 1939 what retailer used the story of Rudolph the Red Nose Reindeer?": [
-                "Montgomery Ward",
+            "Time After Time?": [
+                "time after time",
                 "Sears",
                 "Macys",
                 "Kmart"
             ]
         },
         {
-            "Santa\'s reindeer named Donner was originally named what?": [
-                "Dunder",
+            "Sweet Dreams?": [
+                "sweet dreams",
                 "Donny",
                 "Dweedle",
                 "Dreamy"
