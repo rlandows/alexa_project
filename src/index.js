@@ -85,7 +85,7 @@ var newSessionHandlers = {
 
 var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
     "StartGame": function (newGame) {
-        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) + this.t("HELLO HELLO HELLO HELLO HELLO") : "";
+        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) : "";
         // Select GAME_LENGTH questions for the game
         var translatedQuestions = this.t("QUESTIONS");
         var gameQuestions = populateGameQuestions(translatedQuestions);
@@ -224,8 +224,14 @@ function handleUserGuess(userGaveUp) {
     var correctAnswerText = this.attributes.correctAnswerText;
     var translatedQuestions = this.t("QUESTIONS");
 
-    if (answerSlotValid && parseInt(this.event.request.intent.slots.Answer.value) == this.attributes["correctAnswerIndex"]) {
+    console.log('ANSWERSLOTVALID', answerSlotValid)
+    console.log('THIS.ATTRIBUTES["CORRECTANSWERINDEX"]', this.attributes["correctAnswerIndex"])
+    var answerObject = (this.event.request.intent.slots.Answer);
+    if (answerSlotValid && parseInt(answerObject.value) == this.attributes["correctAnswerIndex"]) {
+
+      console.log('CONDITION PASSED')
         currentScore++;
+
         speechOutputAnalysis = this.t("ANSWER_CORRECT_MESSAGE");
     } else {
         if (!userGaveUp) {
@@ -249,9 +255,9 @@ function handleUserGuess(userGaveUp) {
         var questionIndexForSpeech = currentQuestionIndex + 1;
         var repromptText = this.t("TELL_QUESTION_MESSAGE", questionIndexForSpeech.toString(), spokenQuestion);
 
-        for (var i = 0; i < ANSWER_COUNT; i++) {
-            repromptText += (i+1).toString() + ". " + roundAnswers[i] + ". "
-        }
+        // for (var i = 0; i < ANSWER_COUNT; i++) {
+        //     repromptText += (i+1).toString() + ". " + roundAnswers[i] + ". "
+        // }
 
         speechOutput += userGaveUp ? "" : this.t("ANSWER_IS_MESSAGE");
         speechOutput += speechOutputAnalysis + this.t("SCORE_IS_MESSAGE", currentScore.toString()) + repromptText;
@@ -334,11 +340,11 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
 function isAnswerSlotValid(intent) {
     var answerSlotFilled = intent && intent.slots && intent.slots.Answer && intent.slots.Answer.value;
     var answerSlotIsInt = answerSlotFilled && !isNaN(parseInt(intent.slots.Answer.value));
-    // console.log("answerSlotFilled is " + answerSlotFilled);
-    // console.log("answerSlotIsInt is " + answerSlotIsInt);
-    console.log("Piece 1 " + intent.object);
-    // console.log("Piece 2 " + intent.slots);
-    // console.log("Piece 3" + intent.slots.Answer);
-    // console.log("Piece 4 " + intent.slots.Answer.value);
+    console.log("answerSlotFilled is " + answerSlotFilled);
+    console.log("answerSlotIsInt is " + answerSlotIsInt);
+    console.log("Piece 1 " + intent);
+
+    console.log("Piece 3" + intent.slots.Answer);
+    console.log("Piece 4 " + intent.slots.Answer.value);
     return answerSlotIsInt && parseInt(intent.slots.Answer.value) < (ANSWER_COUNT + 1) && parseInt(intent.slots.Answer.value) > 0;
 }
