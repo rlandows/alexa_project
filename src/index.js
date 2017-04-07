@@ -227,7 +227,7 @@ function handleUserGuess(userGaveUp) {
     console.log('ANSWERSLOTVALID', answerSlotValid)
     console.log('THIS.ATTRIBUTES["CORRECTANSWERINDEX"]', this.attributes["correctAnswerIndex"])
     var answerObject = (this.event.request.intent.slots.Answer);
-    if (answerSlotValid && parseInt(answerObject.value) == this.attributes["correctAnswerIndex"]) {
+    if (answerSlotValid && answerObject.value == this.attributes["correctAnswerText"]) {
 
       console.log('CONDITION PASSED')
         currentScore++;
@@ -339,12 +339,11 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
 
 function isAnswerSlotValid(intent) {
     var answerSlotFilled = intent && intent.slots && intent.slots.Answer && intent.slots.Answer.value;
-    var answerSlotIsInt = answerSlotFilled && !isNaN(parseInt(intent.slots.Answer.value));
     console.log("answerSlotFilled is " + answerSlotFilled);
-    console.log("answerSlotIsInt is " + answerSlotIsInt);
+  
     console.log("Piece 1 " + intent);
 
     console.log("Piece 3" + intent.slots.Answer);
     console.log("Piece 4 " + intent.slots.Answer.value);
-    return answerSlotIsInt && parseInt(intent.slots.Answer.value) < (ANSWER_COUNT + 1) && parseInt(intent.slots.Answer.value) > 0;
+    return answerSlotFilled;
 }
