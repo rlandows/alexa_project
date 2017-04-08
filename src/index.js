@@ -85,7 +85,7 @@ var newSessionHandlers = {
 
 var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
     "StartGame": function (newGame) {
-        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) : "";
+        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) + SimplePlayer.prototype.play : "";
         // Select GAME_LENGTH questions for the game
         var translatedQuestions = this.t("QUESTIONS");
         var gameQuestions = populateGameQuestions(translatedQuestions);
@@ -107,8 +107,10 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
         //     console.log("This is a test" + roundAnswers[i]);
         // }
 
-        speechOutput += repromptText;
 
+
+        speechOutput += repromptText;
+        console.log("Hello!"SimplePlayer.prototype.play);
         Object.assign(this.attributes, {
             "speechOutput": repromptText,
             "repromptText": repromptText,
@@ -116,8 +118,24 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
             "correctAnswerIndex": correctAnswerIndex + 1,
             "questions": gameQuestions,
             "score": 0,
-            "correctAnswerText": translatedQuestions[gameQuestions[currentQuestionIndex]][Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0]][0]
+            "correctAnswerText": translatedQuestions[gameQuestions[currentQuestionIndex]][Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0]][0],
+            directives: [
+                {
+                    type: "AudioPlayer.Play",
+                    playBehavior: "REPLACE_ALL", // Setting to REPLACE_ALL means that this track will start playing immediately
+                    audioItem: {
+                        stream: {
+                            url: audioURL,
+                            token: "0", // Unique token for the track - needed when queueing multiple tracks
+                            expectedPreviousToken: null, // The expected previous token - when using queues, ensures safety
+                            offsetInMilliseconds: offsetInMilliseconds
+                        }
+                    }
+                }
+            ]
+
         });
+
 
         // Set the current state to trivia mode. The skill will now use handlers defined in triviaStateHandlers
         this.handler.state = GAME_STATES.TRIVIA;
@@ -340,10 +358,35 @@ function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAn
 function isAnswerSlotValid(intent) {
     var answerSlotFilled = intent && intent.slots && intent.slots.Answer && intent.slots.Answer.value;
     console.log("answerSlotFilled is " + answerSlotFilled);
-  
+
     console.log("Piece 1 " + intent);
 
     console.log("Piece 3" + intent.slots.Answer);
     console.log("Piece 4 " + intent.slots.Answer.value);
     return answerSlotFilled;
 }
+
+SimplePlayer.prototype.play = function ('https://p.scdn.co/mp3-preview/c509ee339241db2d6f451505048b4c5acf4c6587?cid=null', 0) {
+var response = {
+version: "1.0",
+response: {
+    shouldEndSession: true,
+    directives: [
+        {
+            type: "AudioPlayer.Play",
+            playBehavior: "REPLACE_ALL", // Setting to REPLACE_ALL means that this track will start playing immediately
+            audioItem: {
+                stream: {
+                    url: audioURL,
+                    token: "0", // Unique token for the track - needed when queueing multiple tracks
+                    expectedPreviousToken: null, // The expected previous token - when using queues, ensures safety
+                    offsetInMilliseconds: offsetInMilliseconds
+                }
+            }
+        }
+    ]
+}
+}
+
+this.context.succeed(response);
+};
