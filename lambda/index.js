@@ -9,10 +9,9 @@ var GAME_STATES = {
     HELP: "_HELPMODE" // The user is asking for help.
 };
 var questions = require("./questions");
-
 //simpleAudio
 var stateByUser = {};
-var podcastURL = "https://p.scdn.co/mp3-preview/2385471a5d35709ad90e368dacabe4082af4541a?cid=null";
+var podcastURL = "https://p.scdn.co/mp3-preview/a69cabb16c6c3333db903d1f538e808493689e40?cid=null";
 
 /**
  * When editing your questions pay attention to your punctuation. Make sure you use question marks or periods.
@@ -57,25 +56,24 @@ var languageString = {
 
 var Alexa = require("alexa-sdk");
 var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
+var player = null;
 
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.appId = APP_ID;
     // To enable string internationalization (i18n) features, set a resources object.
-    //simpleAudio
-    // var player = new SimplePlayer(event, context);
-    // player.handle();
     alexa.resources = languageString;
-    alexa.registerHandlers(newSessionHandlers, startStateHandlers, triviaStateHandlers, helpStateHandlers, SimplePlayer);
+    //simpleAudio
+    player = new SimplePlayer(event, context);
+    alexa.registerHandlers(newSessionHandlers, startStateHandlers, triviaStateHandlers, helpStateHandlers);
+
     alexa.execute();
 };
 
 var newSessionHandlers = {
     "LaunchRequest": function () {
         this.handler.state = GAME_STATES.START;
-        SimplePlayer.prototype.play(audioURL, 0));
         this.emitWithState("StartGame", true);
-
 
     },
     "AMAZON.StartOverIntent": function() {
@@ -94,14 +92,14 @@ var newSessionHandlers = {
 
 var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
     "StartGame": function (newGame) {
-        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()): "";
+        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) : "";
         // Select GAME_LENGTH questions for the game
         var translatedQuestions = this.t("QUESTIONS");
         var gameQuestions = populateGameQuestions(translatedQuestions);
         // Generate a random index for the correct answer, from 0 to 3
         var correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
         var correctAnswer = ANSWER_COUNT;
-        var playSong = SimplePlayer.prototype.play(audioURL, 0);
+
         // Select and shuffle the answers for each question
         var roundAnswers = populateRoundAnswers(gameQuestions, 0, correctAnswerIndex, translatedQuestions);
         console.log("This is roundAnswers " + roundAnswers);
@@ -110,15 +108,15 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
         var spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
         console.log("This is spokenQuestion " + spokenQuestion);
         var repromptText = this.t("TELL_QUESTION_MESSAGE", "1", spokenQuestion);
+        // var player = new SimplePlayer();
 
         // for (var i = 0; i < ANSWER_COUNT; i++) {
         //     repromptText += (i+1).toString() + ". " + roundAnswers[i] + ". ";
         //     console.log("This is a test" + roundAnswers[i]);
         // }
-
+        player.play(audioURL, 0);
         speechOutput += repromptText;
-        playSong;
-        console.log("this is the song" playSong);
+
         Object.assign(this.attributes, {
             "speechOutput": repromptText,
             "repromptText": repromptText,
@@ -358,7 +356,6 @@ function isAnswerSlotValid(intent) {
     return answerSlotFilled;
 }
 
-// The SimplePlayer has helpful routines for interacting with Alexa, within minimal overhead
 var SimplePlayer = function (event, context) {
     this.event = event;
     this.context = context;
@@ -372,8 +369,13 @@ SimplePlayer.prototype.handle = function () {
 
     // On launch, we tell the user what they can do (Play audio :-))
     if (requestType === "LaunchRequest") {
-        // this.say("Welcome to the Simple Audio Player. Say Play to play some audio!", "You can say Play");
+
+        this.say("Welcome to the Simple Audio Player. Say Play to play some audio!", "You can say Play");
+
         this.play(podcastURL, 0);
+        setTimeout(this.stop, 3000);
+        // this.emitWithState("StartGame", true);
+
     // Handle Intents here - Play, Pause and Resume is all for now
     } else if (requestType === "IntentRequest") {
         var intent = this.event.request.intent;
@@ -432,7 +434,7 @@ SimplePlayer.prototype.say = function (message, repromptMessage) {
  * @param offsetInMilliseconds The point from which to play - we set this to something other than zero when resuming
  */
 SimplePlayer.prototype.play = function (audioURL, offsetInMilliseconds) {
-    var response = {
+    var  = {
         version: "1.0",
         response: {
             shouldEndSession: true,
