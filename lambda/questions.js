@@ -9,7 +9,7 @@ module.exports = {
 
     "QUESTIONS_EN_US" : [
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/Sheep.mp3" />': [
+            ' ': [
                 "sheep",
                 "horse",
                 "cow",
@@ -18,7 +18,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />': [
+            ' ': [
                 "dog",
                 "wolf",
                 "coyote",
@@ -27,7 +27,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />': [
+            ' ': [
                 "owl",
                 "eagle",
                 "duck",
@@ -35,7 +35,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/Owl.mp3" />': [
+            ' ': [
                 "monkey",
                 "gorilla",
                 "dog",
@@ -43,7 +43,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />': [
+            ' ': [
                 "cat",
                 "leopard",
                 "cheetah",
@@ -51,7 +51,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/cats.mp3" />': [
+            ' ': [
                 "pigeon",
                 "hawk",
                 "eagle",
@@ -59,7 +59,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/parrot.mp3" />': [
+            ' ': [
                 "Parrot",
                 "eagle",
                 "goose",
@@ -67,7 +67,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/Pigs.mp3" />': [
+            ' ': [
                 "pig",
                 "sheep",
                 "horse",
@@ -75,7 +75,7 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/Snake.mp3" />': [
+            ' ': [
                 "snake",
                 "pigeon",
                 "cow",
@@ -83,341 +83,327 @@ module.exports = {
             ]
         },
         {
-            '<audio src="https://s3.amazonaws.com/audiofilerob/VULTURE.mp3" />': [
+            ' ': [
                 "vulture",
                 "cat",
                 "eagle",
                 "hawk"
             ]
         }
-        // ,
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/rabbit.mp3" />': [
-        //         "rabbit",
-        //         "pigeon",
-        //         "wolf",
-        //         "coyote"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/bee.mp3" />': [
-        //         "bee",
-        //         "lizard",
-        //         "cow",
-        //         "moose"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Crow.mp3" />': [
-        //         "crow",
-        //         "pigeon",
-        //         "dove",
-        //         "raven"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Elephant.mp3" />': [
-        //         "elephant",
-        //         "turkey",
-        //         "giraffe",
-        //         "lion"
-        //     ]
-        // },
-        // {
-        //   '<audio src="https://s3.amazonaws.com/audiofilerob/hyena.mp3" />': [
-        //         "hyena",
-        //         "dog",
-        //         "wolf",
-        //         "goose"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Horse.mp3" />': [
-        //         "horse",
-        //         "cow",
-        //         "dove",
-        //         "wolf"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/duck.mp3" />': [
-        //         "duck",
-        //         "eagle",
-        //         "monkey",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Bear.mp3" />': [
-        //         "bear",
-        //         "horse",
-        //         "moose",
-        //         "eagle"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/donkey.mp3" />': [
-        //         "donkey",
-        //         "horse",
-        //         "cow",
-        //         "moose"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/WHALE.mp3" />': [
-        //         "whale",
-        //         "dolphin",
-        //         "shark",
-        //         "mouse"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/cricket.mp3" />': [
-        //         "cricket",
-        //         "frog",
-        //         "toad",
-        //         "eagle"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/chicken.mp3" />': [
-        //         "chicken",
-        //         "rooster",
-        //         "cow",
-        //         "dove"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/ROOSTER+.mp3" />': [
-        //         "rooster",
-        //         "eagle",
-        //         "turkey",
-        //         "chicken"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/goat.mp3" />': [
-        //         "goat",
-        //         "sheep",
-        //         "cow",
-        //         "fish"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/dolphin.mp3" />': [
-        //         "dolphin",
-        //         "whale",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/fox.mp3" />': [
-        //         "fox",
-        //         "dog",
-        //         "wolf",
-        //         "horse"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Lion.mp3" />': [
-        //         "lion",
-        //         "tiger",
-        //         "bear",
-        //         "horse"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/tiger.mp3" />': [
-        //         "tiger",
-        //         "lion",
-        //         "bear",
-        //         "eagle"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/eagle.mp3" />': [
-        //         "eagle",
-        //         "pigeon",
-        //         "dove",
-        //         "hawk"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/frog.mp3" />': [
-        //         "frog",
-        //         "toad",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/bats.mp3" />': [
-        //         "bat",
-        //         "pigeon",
-        //         "eagle",
-        //         "dove"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/hawk.mp3" />': [
-        //         "hawk",
-        //         "eagle",
-        //         "dove",
-        //         "mouse"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/moose.mp3" />': [
-        //         "moose",
-        //         "elk",
-        //         "deer",
-        //         "horse"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/camel.mp3" />': [
-        //         "camel",
-        //         "horse",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/mouse.mp3" />': [
-        //         "mouse",
-        //         "pigeon",
-        //         "snake",
-        //         "rat"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Raccoon.mp3" />': [
-        //         "raccoon",
-        //         "fawn",
-        //         "dove",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/gorilla.mp3" />': [
-        //         "gorilla",
-        //         "monkey",
-        //         "cow",
-        //         "dog"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Deer.mp3" />': [
-        //         "deer",
-        //         "rooster",
-        //         "moose",
-        //         "elk"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/hippo.mp3" />': [
-        //         "hippo",
-        //         "moose",
-        //         "cow",
-        //         "lion"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/seagull.mp3" />': [
-        //         "seagull",
-        //         "pigeon",
-        //         "moose",
-        //         "eagle"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/mosquito.mp3" />': [
-        //         "mosquito",
-        //         "pigeon",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/sealion.mp3" />': [
-        //         "sea lion",
-        //         "manatee",
-        //         "cow",
-        //         "dove"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/goose.mp3" />': [
-        //         "goose",
-        //         "pigeon",
-        //         "mouse",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/ostrich.mp3" />': [
-        //         "ostrich",
-        //         "pigeon",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Crocodile.mp3" />': [
-        //         "crocodile",
-        //         "pigeon",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/PENGUIN.mp3" />': [
-        //         "penguin",
-        //         "pigeon",
-        //         "dove",
-        //         "eagle"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/wolf.mp3" />': [
-        //         "wolf",
-        //         "bird",
-        //         "cow",
-        //         "eagle"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/KOALA.mp3" />': [
-        //         "koala",
-        //         "eagle",
-        //         "dove",
-        //         "bear"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/squirrel.mp3" />': [
-        //         "squirrel",
-        //         "pigeon",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/Turkey.mp3" />': [
-        //         "turkey",
-        //         "chicken",
-        //         "rooster",
-        //         "alligator"
-        //     ]
-        // },
-        // {
-        //     '<audio src="https://s3.amazonaws.com/audiofilerob/cheetah.mp3" />': [
-        //         "cheetah",
-        //         "pigeon",
-        //         "cow",
-        //         "alligator"
-        //     ]
-        // }
+        ,
+        {
+            ' ': [
+                "rabbit",
+                "pigeon",
+                "wolf",
+                "coyote"
+            ]
+        },
+        {
+            ' ': [
+                "bee",
+                "lizard",
+                "cow",
+                "moose"
+            ]
+        },
+        {
+            ' ': [
+                "crow",
+                "pigeon",
+                "dove",
+                "raven"
+            ]
+        },
+        {
+            ' ': [
+                "elephant",
+                "turkey",
+                "giraffe",
+                "lion"
+            ]
+        },
+        {
+          ' ': [
+                "hyena",
+                "dog",
+                "wolf",
+                "goose"
+            ]
+        },
+        {
+          ' ': [
+                "horse",
+                "cow",
+                "dove",
+                "wolf"
+            ]
+        },
+        {
+            ' ': [
+                "duck",
+                "eagle",
+                "monkey",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "bear",
+                "horse",
+                "moose",
+                "eagle"
+            ]
+        },
+        {
+            ' ': [
+                "donkey",
+                "horse",
+                "cow",
+                "moose"
+            ]
+        },
+        {
+            ' ': [
+                "whale",
+                "dolphin",
+                "shark",
+                "mouse"
+            ]
+        },
+        {
+            ' ': [
+                "cricket",
+                "frog",
+                "toad",
+                "eagle"
+            ]
+        },
+        {
+            ' ': [
+                "chicken",
+                "rooster",
+                "cow",
+                "dove"
+            ]
+        },
+        {
+            ' ': [
+                "rooster",
+                "eagle",
+                "turkey",
+                "chicken"
+            ]
+        },
+        {
+            ' ': [
+                "goat",
+                "sheep",
+                "cow",
+                "fish"
+            ]
+        },
+        {
+            ' ': [
+                "dolphin",
+                "whale",
+                "cow",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "fox",
+                "dog",
+                "wolf",
+                "horse"
+            ]
+        },
+        {
+            ' ': [
+                "lion",
+                "tiger",
+                "bear",
+                "horse"
+            ]
+        },
+        {
+            ' ': [
+                "tiger",
+                "lion",
+                "bear",
+                "eagle"
+            ]
+        },
+        {
+            ' ': [
+                "eagle",
+                "pigeon",
+                "dove",
+                "hawk"
+            ]
+        },
+        {
+            ' ': [
+                "frog",
+                "toad",
+                "cow",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "bat",
+                "pigeon",
+                "eagle",
+                "dove"
+            ]
+        },
+        {
+            ' ': [
+                "hawk",
+                "eagle",
+                "dove",
+                "mouse"
+            ]
+        },
+        {
+            ' ': [
+                "moose",
+                "elk",
+                "deer",
+                "horse"
+            ]
+        },
+
+        {
+          ' ': [
+                "mouse",
+                "pigeon",
+                "snake",
+                "rat"
+            ]
+        },
+
+        {
+            ' ': [
+                "gorilla",
+                "monkey",
+                "cow",
+                "dog"
+            ]
+        },
+        {
+            ' ': [
+                "deer",
+                "rooster",
+                "moose",
+                "elk"
+            ]
+        },
+        {
+            ' ': [
+                "hippo",
+                "moose",
+                "cow",
+                "lion"
+            ]
+        },
+        {
+            ' ': [
+                "seagull",
+                "pigeon",
+                "moose",
+                "eagle"
+            ]
+        },
+        {
+            ' ': [
+                "mosquito",
+                "pigeon",
+                "cow",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "sea lion",
+                "manatee",
+                "cow",
+                "dove"
+            ]
+        },
+        {
+            ' ': [
+                "goose",
+                "pigeon",
+                "mouse",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "ostrich",
+                "pigeon",
+                "cow",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "crocodile",
+                "pigeon",
+                "cow",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "penguin",
+                "pigeon",
+                "dove",
+                "eagle"
+            ]
+        },
+        {
+            ' ': [
+                "wolf",
+                "bird",
+                "cow",
+                "eagle"
+            ]
+        },
+        {
+            ' ': [
+                "koala",
+                "eagle",
+                "dove",
+                "bear"
+            ]
+        },
+        {
+            ' ': [
+                "squirrel",
+                "pigeon",
+                "cow",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "turkey",
+                "chicken",
+                "rooster",
+                "alligator"
+            ]
+        },
+        {
+            ' ': [
+                "cheetah",
+                "pigeon",
+                "cow",
+                "alligator"
+            ]
+        }
     ]
 };

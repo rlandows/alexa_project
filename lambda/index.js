@@ -10,7 +10,57 @@ var GAME_STATES = {
      // The user is asking for help.
     // AUDIO_PLAYER: '_AUDIO_PLAYER'
 };
-
+var quester = 0;
+var animals = ['<audio src="https://s3.amazonaws.com/audiofilerob/Sheep.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/Owl.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/Monkey.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/cats.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/Pigeon.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/parrot.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/Pigs.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/Snake.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/VULTURE.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/rabbit.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/bee.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/Crow.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/Elephant.mp3" />',
+      '<audio src="https://s3.amazonaws.com/audiofilerob/hyena.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/Horse.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/duck.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/Bear.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/donkey.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/WHALE.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/cricket.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/chicken.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/ROOSTER+.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/goat.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/dolphin.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/fox.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/Lion.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/tiger.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/eagle.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/frog.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/bats.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/hawk.mp3" />',
+        '<audio src="https://s3.amazonaws.com/audiofilerob/moose.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/mouse.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/gorilla.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/Deer.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/hippo.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/seagull.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/mosquito.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/sealion.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/goose.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/ostrich.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/Crocodile.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/PENGUIN.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/wolf.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/KOALA.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/squirrel.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/Turkey.mp3" />',
+          '<audio src="https://s3.amazonaws.com/audiofilerob/cheetah.mp3" />'
+    ];
 
 var questions = require("./questions");
 // var alexaDevChatPodcasts = require("./alexaDevChatPodcasts");
@@ -24,22 +74,22 @@ var languageString = {
     "en": {
         "translation": {
             "QUESTIONS" : questions["QUESTIONS_EN_US"],
-            "GAME_NAME" : "Reindeer Trivia", // Be sure to change this for your skill.
-            "HELP_MESSAGE": "I will ask you %s multiple choice questions. Respond with the number of the answer. " +
-            "For example, say one, two, three, or four. To start a new game at any time, say, start game. ",
+            "GAME_NAME" : "Animal Sound Game", // Be sure to change this for your skill.
+            "HELP_MESSAGE": "I will ask you %s multiple choice questions. Respond with the name of the animal to see if you got the correct answer. " +
+            "To start a new game at any time, say, start game. ",
             "REPEAT_QUESTION_MESSAGE": "To repeat the last question, say, repeat. ",
             "ASK_MESSAGE_START": "Would you like to start playing?",
-            "HELP_REPROMPT": "To give an answer to a question, respond with the number of the answer. ",
+            "HELP_REPROMPT": "To give an answer to a question, respond with the name of the animal. ",
             "STOP_MESSAGE": "Would you like to keep playing?",
             "CANCEL_MESSAGE": "Ok, let\'s play again soon.",
             "NO_MESSAGE": "Ok, we\'ll play another time. Goodbye!",
-            "TRIVIA_UNHANDLED": "Try saying a number between 1 and %s",
+            "TRIVIA_UNHANDLED": "Try saying the name of the animal",
             "HELP_UNHANDLED": "Say yes to continue, or no to end the game.",
             "AUDIO": `<audio src="https://s3.amazonaws.com/audiofilerob/JungleIntro.mp3" />` ,
             "START_UNHANDLED": "Say start to start a new game.",
             "NEW_GAME_MESSAGE": "Welcome to %s. ",
             "WELCOME_MESSAGE": "I will ask you %s questions, try to get as many right as you can. " +
-            "Just say the number of the answer. Let\'s begin. ",
+            "Just say the name of the animal making the noise. Let\'s begin. ",
             "ANSWER_CORRECT_MESSAGE": "correct. ",
             "ANSWER_WRONG_MESSAGE": "wrong. ",
             "CORRECT_ANSWER_MESSAGE": "The correct answer is %s. ",
@@ -52,7 +102,7 @@ var languageString = {
     "en-US": {
         "translation": {
             "QUESTIONS" : questions["QUESTIONS_EN_US"],
-            "GAME_NAME" : "American Reindeer Trivia" // Be sure to change this for your skill.
+            "GAME_NAME" : "Animal Sound Quiz" // Be sure to change this for your skill.
         }
     }
 
@@ -123,10 +173,10 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
         console.log("This is roundAnswers " + roundAnswers);
         console.log("And this is the right roundAnswer " + roundAnswers[correctAnswerIndex]);
         var currentQuestionIndex = 0;
-        var spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
-        var spokenAnswer = translatedQuestions[gameQuestions[currentQuestionIndex]][spokenQuestion][2];
+        var spokenQuestion = animals[gameQuestions[quester]] + Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
 
-        console.log("SpokenANswer" + spokenAnswer);
+
+
         console.log("This is spokenQuestion " + spokenQuestion);
 
         var repromptText = this.t("TELL_QUESTION_MESSAGE", "1", spokenQuestion);
@@ -159,6 +209,7 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
     "AnswerIntent": function () {
         handleUserGuess.call(this, false);
 
+
     },
     "DontKnowIntent": function () {
         handleUserGuess.call(this, true);
@@ -177,7 +228,7 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
     "AMAZON.StopIntent": function () {
         this.handler.state = GAME_STATES.HELP;
         var speechOutput = this.t("STOP_MESSAGE");
-        this.emit(":ask", speechOutput, speechOutput);
+        this.emit(":tell", this.t("CANCEL_MESSAGE"));
     },
     "AMAZON.CancelIntent": function () {
         this.emit(":tell", this.t("CANCEL_MESSAGE"));
@@ -396,6 +447,7 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
 // });
 
 function handleUserGuess(userGaveUp) {
+    quester++;
     var answerSlotValid = isAnswerSlotValid(this.event.request.intent);
     console.log("This is in the handleUserGuess function " + isAnswerSlotValid(this.event.request.intent));
     console.log("Also in the handleuser function " + this.event.request.intent);
@@ -436,7 +488,7 @@ function handleUserGuess(userGaveUp) {
     } else {
         currentQuestionIndex += 1;
         correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
-        var spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
+        var spokenQuestion = animals[gameQuestions[quester]] + Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
         var roundAnswers = populateRoundAnswers.call(this, gameQuestions, currentQuestionIndex, correctAnswerIndex, translatedQuestions);
         var questionIndexForSpeech = currentQuestionIndex + 1;
         var repromptText = this.t("TELL_QUESTION_MESSAGE", questionIndexForSpeech.toString(), spokenQuestion);
@@ -495,24 +547,13 @@ function populateGameQuestions(translatedQuestions) {
  * only ANSWER_COUNT will be selected.
  * */
 function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAnswerTargetLocation, translatedQuestions) {
-  var animals = ['<audio src="https://s3.amazonaws.com/audiofilerob/Sheep.mp3" />',
-  '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
-  '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
-  '<audio src="https://s3.amazonaws.com/audiofilerob/Owl.mp3" />',
-  '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
-    '<audio src="https://s3.amazonaws.com/audiofilerob/cats.mp3" />',
-    '<audio src="https://s3.amazonaws.com/audiofilerob/parrot.mp3" />',
-    '<audio src="https://s3.amazonaws.com/audiofilerob/Pigs.mp3" />',
-    '<audio src="https://s3.amazonaws.com/audiofilerob/Snake.mp3" />',
-    '<audio src="https://s3.amazonaws.com/audiofilerob/VULTURE.mp3" />'
 
-  ]
     var answers = [];
-    var answersHelp = translatedQuestions[gameQuestionIndexes[correctAnswerIndex]][Object.keys(translatedQuestions[gameQuestionIndexes[correctAnswerIndex]])[0]].slice();
-    var answersCopy = `<audio src="https:${answersHelp}`;
+    var answersCopy = translatedQuestions[gameQuestionIndexes[correctAnswerIndex]][Object.keys(translatedQuestions[gameQuestionIndexes[correctAnswerIndex]])[0]].slice();
+
     var index = answersCopy.length;
-    console.log("popRoundans " + answersHelp);
-    console.log(`<audio src="https:${answersHelp}`);
+
+
 
 
     if (index < ANSWER_COUNT) {
