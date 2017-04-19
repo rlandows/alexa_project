@@ -6,12 +6,15 @@ var GAME_LENGTH = 5;  // The number of questions per trivia game.
 var GAME_STATES = {
     TRIVIA: "_TRIVIAMODE", // Asking trivia questions.
     START: "_STARTMODE", // Entry point, start the game.
-    HELP: "_HELPMODE" // The user is asking for help.
+    HELP: "_HELPMODE"
+     // The user is asking for help.
+    // AUDIO_PLAYER: '_AUDIO_PLAYER'
 };
+
+
 var questions = require("./questions");
-//simpleAudio
-var stateByUser = {};
-var podcastURL = "https://p.scdn.co/mp3-preview/a69cabb16c6c3333db903d1f538e808493689e40?cid=null";
+// var alexaDevChatPodcasts = require("./alexaDevChatPodcasts");
+
 
 /**
  * When editing your questions pay attention to your punctuation. Make sure you use question marks or periods.
@@ -32,6 +35,7 @@ var languageString = {
             "NO_MESSAGE": "Ok, we\'ll play another time. Goodbye!",
             "TRIVIA_UNHANDLED": "Try saying a number between 1 and %s",
             "HELP_UNHANDLED": "Say yes to continue, or no to end the game.",
+            "AUDIO": `<audio src="https://s3.amazonaws.com/audiofilerob/JungleIntro.mp3" />` ,
             "START_UNHANDLED": "Say start to start a new game.",
             "NEW_GAME_MESSAGE": "Welcome to %s. ",
             "WELCOME_MESSAGE": "I will ask you %s questions, try to get as many right as you can. " +
@@ -56,15 +60,18 @@ var languageString = {
 
 var Alexa = require("alexa-sdk");
 var APP_ID = undefined;  // TODO replace with your app ID (OPTIONAL).
-var player = null;
+
 
 exports.handler = function(event, context, callback) {
     var alexa = Alexa.handler(event, context);
     alexa.appId = APP_ID;
     // To enable string internationalization (i18n) features, set a resources object.
     alexa.resources = languageString;
+    // alexa.dynamoDBTableName = 'VoiceData';
     //simpleAudio
-    player = new SimplePlayer(event, context);
+    // var player = new SimplePlayer(event, context);
+    // player.handle();
+
     alexa.registerHandlers(newSessionHandlers, startStateHandlers, triviaStateHandlers, helpStateHandlers);
 
     alexa.execute();
@@ -72,6 +79,8 @@ exports.handler = function(event, context, callback) {
 
 var newSessionHandlers = {
     "LaunchRequest": function () {
+
+
         this.handler.state = GAME_STATES.START;
         this.emitWithState("StartGame", true);
 
@@ -83,7 +92,13 @@ var newSessionHandlers = {
     "AMAZON.HelpIntent": function() {
         this.handler.state = GAME_STATES.HELP;
         this.emitWithState("helpTheUser", true);
-    },
+    }
+    // ,
+    // 'PlayPodcast': function () {
+    //   this.handler.state = GAME_STATES.AUDIO_PLAYER;
+    //   this.emitWithState('PlayPodcast');
+    // }
+    ,
     "Unhandled": function () {
         var speechOutput = this.t("START_UNHANDLED");
         this.emit(":ask", speechOutput, speechOutput);
@@ -92,13 +107,16 @@ var newSessionHandlers = {
 
 var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
     "StartGame": function (newGame) {
-        var speechOutput = newGame ? this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString()) : "";
+        var speechOutput = newGame ? this.t("AUDIO") + this.t("NEW_GAME_MESSAGE", this.t("GAME_NAME")) + this.t("WELCOME_MESSAGE", GAME_LENGTH.toString())  : "";
         // Select GAME_LENGTH questions for the game
         var translatedQuestions = this.t("QUESTIONS");
         var gameQuestions = populateGameQuestions(translatedQuestions);
         // Generate a random index for the correct answer, from 0 to 3
         var correctAnswerIndex = Math.floor(Math.random() * (ANSWER_COUNT));
         var correctAnswer = ANSWER_COUNT;
+        console.log("This is correct answer" + correctAnswer);
+        console.log("Gamequestions" + gameQuestions);
+
 
         // Select and shuffle the answers for each question
         var roundAnswers = populateRoundAnswers(gameQuestions, 0, correctAnswerIndex, translatedQuestions);
@@ -106,15 +124,13 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
         console.log("And this is the right roundAnswer " + roundAnswers[correctAnswerIndex]);
         var currentQuestionIndex = 0;
         var spokenQuestion = Object.keys(translatedQuestions[gameQuestions[currentQuestionIndex]])[0];
-        console.log("This is spokenQuestion " + spokenQuestion);
-        var repromptText = this.t("TELL_QUESTION_MESSAGE", "1", spokenQuestion);
-        // var player = new SimplePlayer();
+        var spokenAnswer = translatedQuestions[gameQuestions[currentQuestionIndex]][spokenQuestion][2];
 
-        // for (var i = 0; i < ANSWER_COUNT; i++) {
-        //     repromptText += (i+1).toString() + ". " + roundAnswers[i] + ". ";
-        //     console.log("This is a test" + roundAnswers[i]);
-        // }
-        player.play(audioURL, 0);
+        console.log("SpokenANswer" + spokenAnswer);
+        console.log("This is spokenQuestion " + spokenQuestion);
+
+        var repromptText = this.t("TELL_QUESTION_MESSAGE", "1", spokenQuestion);
+
         speechOutput += repromptText;
 
         Object.assign(this.attributes, {
@@ -131,6 +147,12 @@ var startStateHandlers = Alexa.CreateStateHandler(GAME_STATES.START, {
         this.handler.state = GAME_STATES.TRIVIA;
         this.emit(":askWithCard", speechOutput, repromptText, this.t("GAME_NAME"), repromptText);
     }
+    // ,
+    //
+    // 'PlayPodcast': function () {
+    //   this.handler.state = GAME_STATES.AUDIO_PLAYER;
+    //   this.emitWithState('PlayPodcast');
+    // }
 });
 
 var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
@@ -167,6 +189,11 @@ var triviaStateHandlers = Alexa.CreateStateHandler(GAME_STATES.TRIVIA, {
     "SessionEndedRequest": function () {
         console.log("Session ended in trivia state: " + this.event.request.reason);
     }
+    // ,
+    // 'PlayPodcast': function () {
+    //   this.handler.state = GAME_STATES.AUDIO_PLAYER;
+    //   this.emitWithState('PlayPodcast');
+    // }
 });
 
 var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
@@ -216,6 +243,157 @@ var helpStateHandlers = Alexa.CreateStateHandler(GAME_STATES.HELP, {
         console.log("Session ended in help state: " + this.event.request.reason);
     }
 });
+
+// var audioPlayerHandlers = Alexa.CreateStateHandler(GAME_STATES.AUDIO_PLAYER, {
+//     // 'LaunchRequest': function() {
+//     //   this.emitWithState('PlayPodcast');
+//     // },
+//     'PlayPodcast': function () {
+//
+//       //get episode slot
+//       var episodeSlot = parseInt(this.event.request.intent.slots.Episode.value);
+//
+//       //play specific episode
+//
+//       if (episodeSlot > 0 && episodeSlot <= alexaDevChatPodcasts.length) {
+//         //set the audio player session attributes
+//         this.attributes['currentEpisode'] = episodeSlot;
+//         this.attributes['offsetInMilliseconds'] = 0;
+//
+//         //speech output
+//         this.response.speak(`Playing episode ${episodeSlot} of the alexa podcast.`);
+//
+//         //audio directive
+//         this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[episodeSlot - 1].audioURL, episodeSlot, null, 0);
+//         //Build Response and Send it to Alexa
+//         this.emit(':responseReady');
+//       }
+//
+//       //Invalid episode number
+//       // else if (episodeSlot) {
+//       //   this.handler.state = GAME_STATES.TRIVIA;
+//       //   this.emit(':tell', "Sorry it is not working,");
+//       // }
+//       //Play latest episode
+//       else {
+//         //Set audio Player Session Attribute
+//         this.attributes['currentEpisode'] = alexaDevChatPodcasts.length;
+//         this.attributes['offsetInMilliseconds'] = 0;
+//
+//         this.response.speak(`Playing latest episode ${alexaDevChatPodcasts.length} of the alexa podcast.`);
+//
+//         //audio directive
+//         this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[alexaDevChatPodcasts.length - 1].audioURL, episodeSlot, null, 0);
+//         //Build Response and Send it to Alexa
+//         this.emit(':responseReady');
+//       }
+//     },
+//
+//     'AMAZON.PauseIntent': function () {
+//       this.response.audioPlayerStop();
+//       this.emit(':responseReady');
+//     },
+//     'AMAZON.StopIntent': function () {
+//       this.response.audioPlayerStop();
+//       this.emit(':responseReady');
+//     },
+//     'AMAZON.CancelIntent': function () {
+//       this.response.audioPlayerStop();
+//       this.emit(':responseReady');
+//     },
+//     'AMAZON.ResumeIntent': function () {
+//       //get audio player session attributes
+//       var currentEpisode = this.attributes['currentEpisode'];
+//       var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
+//
+//       //audio directive
+//       this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[currentEpisode - 1].audioURL, currentEpisode, null, offsetInMilliseconds);
+//       //build response and send it to alexa
+//       this.emit(':responseReady');
+//
+//     },
+//     'AMAZON.NextIntent': function () {
+//       //get audio player session attributes
+//       var currentEpisode = this.attributes['currentEpisode'];
+//       var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
+//
+//       //last episode - Resume playing
+//       if (currentEpisode === alexaDevChatPodcasts.length) {
+//         //speech output
+//         this.response.speak(`Sorry ${currentEpisode} episode is the latest episode. Resuming`);
+//
+//         this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[currentEpisode - 1].audioURL, currentEpisode, null, offsetInMilliseconds);
+//         //build response and send it to alexa
+//         this.emit(':responseReady');
+//       }
+//       //Play next episode
+//       else {
+//         currentEpisode++;
+//
+//         this.response.speak(`Playing episode ${currentEpisode} `);
+//
+//         this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[currentEpisode - 1].audioURL, currentEpisode, null, 0);
+//         //build response and send it to alexa
+//         this.emit(':responseReady');
+//       }
+//     },
+//     'AMAZON.PreviousIntent': function () {
+//       //get audio player session attributes
+//       var currentEpisode = this.attributes['currentEpisode'];
+//       var offsetInMilliseconds = this.attributes['offsetInMilliseconds'];
+//
+//       //First episode - Resume Playing
+//       if (currentEpisode === 1) {
+//         this.response.speak(`Playing the first episode  `);
+//
+//         this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[currentEpisode - 1].audioURL, currentEpisode, null, offsetInMilliseconds);
+//         //build response and send it to alexa
+//         this.emit(':responseReady');
+//       }
+//
+//       //play previous episode
+//       else {
+//         currentEpisode--;
+//
+//         this.response.speak(`Playing episode ${currentEpisode} `);
+//
+//         this.response.audioPlayerPlay('REPLACE_ALL', alexaDevChatPodcasts[currentEpisode - 1].audioURL, currentEpisode, null, 0);
+//         //build response and send it to alexa
+//         this.emit(':responseReady');
+//       }
+//
+//     },
+//     'AMAZON.HelpIntent': function () {
+//       var audioHelpMessage = "You are listening to the alexa dev chat";
+//       this.emit(":ask", audioHelpMessage, audioHelpMessage);
+//     },
+//
+//     //Audio Event Handlers
+//     'PlaybackStarted': function () {
+//       this.attributes['currentEpisode'] = parseInt(this.event.request.token);
+//       this.attributes['offsetInMilliseconds'] = parseInt(this.event.request.offsetInMilliseconds);
+//       this.emit(':saveState', true);
+//     },
+//     'PlaybackFinished': function () {
+//       //Back to main state
+//       this.handler.state = GAME_STATES.START;
+//       this.emitWithState("StartGame", true);
+//     },
+//     'PlaybackStopped': function () {
+//       this.attributes['currentEpisode'] = parseInt(this.event.request.token);
+//       this.attributes['offsetInMilliseconds'] = parseInt(this.event.request.offsetInMilliseconds);
+//       this.emit(':saveState', true);
+//     },
+//     'PlaybackFailed': function () {
+//       console.log('Player Fail', this.event.request.error);
+//       this.context.succeed(true);
+//     },
+//
+//     //unhandled function - Handles optional audio intents
+//     'Unhandled': function () {
+//       this.emitWithState('AMAZON.HelpIntent');
+//     },
+// });
 
 function handleUserGuess(userGaveUp) {
     var answerSlotValid = isAnswerSlotValid(this.event.request.intent);
@@ -317,9 +495,25 @@ function populateGameQuestions(translatedQuestions) {
  * only ANSWER_COUNT will be selected.
  * */
 function populateRoundAnswers(gameQuestionIndexes, correctAnswerIndex, correctAnswerTargetLocation, translatedQuestions) {
+  var animals = ['<audio src="https://s3.amazonaws.com/audiofilerob/Sheep.mp3" />',
+  '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
+  '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
+  '<audio src="https://s3.amazonaws.com/audiofilerob/Owl.mp3" />',
+  '<audio src="https://s3.amazonaws.com/audiofilerob/DOG.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/cats.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/parrot.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/Pigs.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/Snake.mp3" />',
+    '<audio src="https://s3.amazonaws.com/audiofilerob/VULTURE.mp3" />'
+
+  ]
     var answers = [];
-    var answersCopy = translatedQuestions[gameQuestionIndexes[correctAnswerIndex]][Object.keys(translatedQuestions[gameQuestionIndexes[correctAnswerIndex]])[0]].slice();
+    var answersHelp = translatedQuestions[gameQuestionIndexes[correctAnswerIndex]][Object.keys(translatedQuestions[gameQuestionIndexes[correctAnswerIndex]])[0]].slice();
+    var answersCopy = `<audio src="https:${answersHelp}`;
     var index = answersCopy.length;
+    console.log("popRoundans " + answersHelp);
+    console.log(`<audio src="https:${answersHelp}`);
+
 
     if (index < ANSWER_COUNT) {
         throw new Error("Not enough answers for question.");
@@ -355,139 +549,3 @@ function isAnswerSlotValid(intent) {
     console.log("Piece 4 " + intent.slots.Answer.value);
     return answerSlotFilled;
 }
-
-var SimplePlayer = function (event, context) {
-    this.event = event;
-    this.context = context;
-};
-
-// Handles an incoming Alexa request
-SimplePlayer.prototype.handle = function () {
-    var requestType = this.event.request.type;
-    var userId = this.event.context ? this.event.context.System.user.userId : this.event.session.user.userId;
-    var response = null;
-
-    // On launch, we tell the user what they can do (Play audio :-))
-    if (requestType === "LaunchRequest") {
-
-        this.say("Welcome to the Simple Audio Player. Say Play to play some audio!", "You can say Play");
-
-        this.play(podcastURL, 0);
-        setTimeout(this.stop, 3000);
-        // this.emitWithState("StartGame", true);
-
-    // Handle Intents here - Play, Pause and Resume is all for now
-    } else if (requestType === "IntentRequest") {
-        var intent = this.event.request.intent;
-        if (intent.name === "Play") {
-            this.play(podcastURL, 0);
-
-        } else if (intent.name === "AMAZON.PauseIntent") {
-            // When we receive a Pause Intent, we need to issue a stop directive
-            //  Otherwise, it will resume playing - essentially, we are confirming the user's action
-            this.stop();
-
-        } else if (intent.name === "AMAZON.ResumeIntent") {
-            var lastPlayed = this.load(userId);
-            var offsetInMilliseconds = 0;
-            if (lastPlayed !== null) {
-                offsetInMilliseconds = lastPlayed.request.offsetInMilliseconds;
-            }
-
-            this.play(podcastURL, offsetInMilliseconds);
-        }
-    } else if (requestType === "AudioPlayer.PlaybackStopped") {
-        // We save off the PlaybackStopped Intent, so we know what was last playing
-        this.save(userId, this.event);
-
-    }
-};
-
-/**
- * Creates a proper Alexa response using Text-To-Speech
- * @param message
- * @param repromptMessage
- */
-SimplePlayer.prototype.say = function (message, repromptMessage) {
-    var response = {
-        version: "1.0",
-        response: {
-            shouldEndSession: false,
-            outputSpeech: {
-                type: "SSML",
-                ssml: "<speak> " + message + " </speak>"
-            },
-            reprompt: {
-                outputSpeech: {
-                    type: "SSML",
-                    ssml: "<speak> " + message + " </speak>"
-                }
-            }
-        }
-    }
-    this.context.succeed(response);
-};
-
-/**
- * Plays a particular track, from specific offset
- * @param audioURL The URL to play
- * @param offsetInMilliseconds The point from which to play - we set this to something other than zero when resuming
- */
-SimplePlayer.prototype.play = function (audioURL, offsetInMilliseconds) {
-    var  = {
-        version: "1.0",
-        response: {
-            shouldEndSession: true,
-            directives: [
-                {
-                    type: "AudioPlayer.Play",
-                    playBehavior: "REPLACE_ALL", // Setting to REPLACE_ALL means that this track will start playing immediately
-                    audioItem: {
-                        stream: {
-                            url: audioURL,
-                            token: "0", // Unique token for the track - needed when queueing multiple tracks
-                            expectedPreviousToken: null, // The expected previous token - when using queues, ensures safety
-                            offsetInMilliseconds: offsetInMilliseconds
-                        }
-                    }
-                }
-            ]
-        }
-    }
-
-    this.context.succeed(response);
-};
-
-// Stops the playback of Audio
-SimplePlayer.prototype.stop = function () {
-    var response = {
-        version: "1.0",
-        response: {
-            shouldEndSession: true,
-            directives: [
-                {
-                    type: "AudioPlayer.Stop"
-                }
-            ]
-        }
-    }
-
-    this.context.succeed(response);
-};
-
-// Saves information into our super simple, not-production-grade cache
-SimplePlayer.prototype.save = function (userId, state) {
-    console.log("Save: " + userId);
-    stateByUser[userId] = state;
-};
-
-// Load information from our super simple, not-production-grade cache
-SimplePlayer.prototype.load = function (userId) {
-    console.log("Load: " + userId);
-    var state = null;
-    if (userId in stateByUser) {
-        state = stateByUser[userId];
-        console.log("Loaded " + userId + " State: " + state);
-    }
-    return state;
-};
